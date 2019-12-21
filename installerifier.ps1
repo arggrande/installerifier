@@ -6,19 +6,20 @@ Write-Host
 Write-Host "We are going to install a bunch of things."
 Write-Host
 
-function Not-Found 
+function Missing-Command 
 {
     param([string] $executable)
 
     Write-Host "Testing for $executable"
 
-    $result = ((Get-Command $executable -ErrorAction SilentlyContinue) -ne $null)
+    $result = ((Get-Command $executable -ErrorAction SilentlyContinue) -eq $null)
 
-    Write-Host "$executable found: $result"
+    Write-Host "$executable missing: $result"
 }
 
+
 Write-Host "Finding Chocolatey..."
-if(Not-Found -executable "choco.exe")
+if(Missing-Command -executable "choco.exe")
 {
     Write-Host "Chocolatey not found... installing it now!"
 
@@ -39,25 +40,24 @@ else
 }
 
 # Git
-if(Not-Found -executable "git.exe")
+if(Missing-Command -executable "git.exe")
 {    
-    Write-Host "Git is already installed."
 
-}
-else 
-{
     Write-Host "Git not found."
     Write-Host "Installing..."
 
     choco install git -y
 
     Write-Host "Git is installed!"
-
+}
+else 
+{
+    Write-Host "Git is already installed."
 }
 
 # VSCode
 
-if(Not-Found -executable "code.exe")
+if(Missing-Command -executable "code.exe")
 {
     Write-Host "VSCode not found."
     Write-Host "Installing..."
