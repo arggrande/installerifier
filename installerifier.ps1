@@ -10,11 +10,9 @@ function Missing-Command
 {
     param([string] $executable)
 
-    Write-Host "Testing for $executable"
-
     $result = ((Get-Command $executable -ErrorAction SilentlyContinue) -eq $null)
 
-    Write-Host "$executable missing: $result"
+    return $result
 }
 
 
@@ -34,6 +32,7 @@ if(Missing-Command -executable "choco.exe")
 }
 else 
 {
+    # todo: Look at using Update-SessionEnvironment helper from chocolatey.
     Write-Host "Chocolatey is present! Continuing with the rest of the script..."
     Write-Host
     Write-Host "Go grab a coffee and come back later <3"
