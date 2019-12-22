@@ -24,6 +24,7 @@ I'd rate this script as "idempotent-ish". Still very WIP, so YMMV.
 
 1. [TODO] Android Studio
 2. [TODO] SQLite Browser 
+3. Copy the Git config file in `\resources` to the user root folder, complete with shiny aliases.
 
 ### Quality of Life Stuff
 

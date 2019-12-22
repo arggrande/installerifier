@@ -1,0 +1,27 @@
+[user]
+	email = lol@no.com
+	name = Adam Grande
+[push]
+	default = current
+[difftool "sourcetree"]
+	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+	trustExitCode = true
+[alias]
+    ec = config --global -e
+    co = checkout
+    com = checkout master
+    cob = checkout -b
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    cm = !git add -A && git commit -m 
+    wip = !git add -A && git commit -m "WIP"
+    undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    po = "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
+    lg = log -n 10 --oneline
+    lgp = log --pretty=\"tformat:%C(yellow)%h%Creset  %Cgreen(%ar)%Creset  %C(bold blue)<%an>%Creset  %C(bold red)%d%Creset %s\" --date=short --graph
+    st = status
+    updm = !git fetch && git rebase origin/master
+    fire = "!git branch | grep -v 'master' | xargs git branch -D"

@@ -129,6 +129,9 @@ Write-Host "Installing BeyondCompare..."
 # todo make this check for existing installing
 choco install beyondcompare -y
 
+Write-Host "Copying git config file..."
+Copy-Item ".\resources\.gitconfig" -Destination "~/"
+
 
 Write-Host "----------------------------"
 Write-Host "Done!! Oh happy dayyyys..."
