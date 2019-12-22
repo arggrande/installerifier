@@ -125,6 +125,11 @@ else
     Write-Host "SQL Server Express already installed!"
 }
 
+Write-Host "Installing BeyondCompare..."
+# todo make this check for existing installing
+choco install beyondcompare -y
+
+
 Write-Host "----------------------------"
 Write-Host "Done!! Oh happy dayyyys..."
 Write-Host "----------------------------"
