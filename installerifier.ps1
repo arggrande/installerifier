@@ -114,6 +114,7 @@ else
     Write-Host "Visual Studio 2019 already exists"
 }
 
+# lol im checking sql instance, but really I mean to check for ssms. need to fix this.
 $sqlInstance = Get-SqlInstance -ServerInstance ".\sqlexpress"
 
 if($sqlInstance -eq $null)
