@@ -56,7 +56,6 @@ function Install-Prerequesities
     # Todo: Install Update-SessionEnvironment
 }
 
-# todo check exit code here
 $preReqs = Install-Prerequesities
 
 if($preReqs -eq 1)
