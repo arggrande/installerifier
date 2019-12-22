@@ -25,6 +25,14 @@ I'd rate this script as "idempotent-ish". Still very WIP, so YMMV.
 1. [TODO] Android Studio
 2. [TODO] SQLite Browser 
 
+### Quality of Life Stuff
+
+1. Google Chrome
+2. Spotify
+3. Firefox
+4. Paint.NET 
+
 ## Requirements
 
 1. You must have PowerShell. One Day™ I'll do a bash variant for the Mac/Linux folks in the house, but for now PowerShell will do
+2. You probably want to run this as Administrator to save yourself unnecessary hassle. Though Chocolatey should throw a fit if you try and run commands in a non-admin shell
