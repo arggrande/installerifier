@@ -35,8 +35,8 @@ function Install-Prerequesities
     {
         Write-Host "Chocolatey not found... installing it now!"
 
-        #Set-ExecutionPolicy Bypass -Scope Process -Force; 
-        #iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+        Set-ExecutionPolicy Bypass -Scope Process -Force; 
+        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
         Write-Host 
         Write-Host "You need to restart your shell before you continue, otherwise Chocolatey may not be recognised correctly."
@@ -48,16 +48,22 @@ function Install-Prerequesities
     Write-Host "Installing SQL Server modules"
     Install-Module -Name SqlServer
 
+    Write-Host "Installing Git Fork!"
+    choco install git-fork -y
+
     Write-Host "Pre-requesities installed!"
     Write-Host
     # Todo: Install Update-SessionEnvironment
 }
 
 # todo check exit code here
-#Install-Prerequesities
+$preReqs = Install-Prerequesities
 
-
-
+if($preReqs -eq 1)
+{
+    Write-Host "Prerequisites failed to install correctly :("
+    return
+}
 
 # Git
 if(Missing-Command -executable "git.exe")
@@ -66,7 +72,7 @@ if(Missing-Command -executable "git.exe")
     Write-Host "Git not found."
     Write-Host "Installing..."
 
-    #choco install git -y
+    choco install git -y
 
     Write-Host "Git is installed!"
 }
@@ -82,7 +88,7 @@ if(Missing-Command -executable "code.exe")
     Write-Host "VSCode not found."
     Write-Host "Installing..."
 
-    #choco install vscode -y
+    choco install vscode -y
 
     Write-Host "VSCode is installed!"
 }
@@ -98,8 +104,8 @@ if($vs2017 -eq $null)
 {
     Write-Host "Visual Studio 2019 not found."
 
-    # lmao this is super heavy handed but the mobile dev package is currently failing a test in chocolately :(
-    choco install visualstudio2019professional --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US" -y
+    # full install command fails, just going with default for now. This will likely mean you'll have to run the installer afterwards to get the workloads you need.
+    choco install visualstudio2019professional -y
 
     Write-Host "Visual Studio 2019 is installed!"
 }
@@ -107,27 +113,21 @@ else
 {
     Write-Host "Visual Studio 2019 already exists"
 }
-try 
-{
-    # todo make this express specific
-    $sqlExpress = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server').InstalledInstances
-    choco install sql-server-express -y
-}
-catch 
-{
-    Write-Host "SQL Server Express not found"
-}
 
 $sqlInstance = Get-SqlInstance -ServerInstance ".\sqlexpress"
 
 if($sqlInstance -eq $null)
 {
-    choco install sql-server-management-studio
+    choco install sql-server-management-studio -y
 }
 else 
 {
     Write-Host "SQL Server Express already installed!"
 }
+
+Write-Host "----------------------------"
+Write-Host "Done!! Oh happy dayyyys..."
+Write-Host "----------------------------"
 
 # Visual Studio, with Desktop, Mobile, and Web Workloads
 # Sql Express
