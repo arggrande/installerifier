@@ -1,27 +1,48 @@
 [user]
 	email = lol@no.com
 	name = Adam Grande
+[core]
+	editor = "code --wait"
 [push]
 	default = current
-[difftool "sourcetree"]
-	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\"
-[mergetool "sourcetree"]
-	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
-	trustExitCode = true
+[pull]
+    rebase = true
+[init]
+    defaultBranch = main
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
 [alias]
-    ec = config --global -e
-    co = checkout
-    com = checkout master
-    cob = checkout -b
-    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
-    cm = !git add -A && git commit -m 
-    wip = !git add -A && git commit -m "WIP"
-    undo = reset HEAD~1 --mixed
-    amend = commit -a --amend
-    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-    po = "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
-    lg = log -n 10 --oneline
-    lgp = log --pretty=\"tformat:%C(yellow)%h%Creset  %Cgreen(%ar)%Creset  %C(bold blue)<%an>%Creset  %C(bold red)%d%Creset %s\" --date=short --graph
-    st = status
-    updm = !git fetch && git rebase origin/master
-    fire = "!git branch | grep -v 'master' | xargs git branch -D"
+	ec = config --global -e
+	st = status
+	co = checkout
+	cob = checkout -b
+	rbm = fetch && git rebase origin/main
+	cm = !git add . && git commit -m
+	fire = "!git branch | grep -v 'main' | grep -v '^\\*' | xargs git branch -D"
+	l = log --graph --pretty=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %s %C(dim white)(%an, %ar)%C(reset)' -10
+	ll = log --pretty=format:'%C(yellow)%h%C(reset) %C(blue)%ad%C(reset) %s %C(dim white)(%an)%C(reset)' --date=short -15
+	lf = log --oneline --name-only
+	undo = reset HEAD~1 --mixed
+	wip = !git add -A && git commit -m "WIP"
+	ec = config --global -e
+	unstage = reset HEAD --
+
+[rerere]
+    enabled = true
+[color]
+    ui = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
